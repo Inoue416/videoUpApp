@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block title %}INDEX{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col pl-3 pr-3">
+      <h3 class="mb-4">アプリの使用方法</h3>
+        <h5 >(はじめに)</h5>
+        <p>
+          &emsp;学内の方は「<strong>学籍番号</strong>」を入力欄に入力すると、ログインできます。<br />
+          学外の方は、「<strong>guest</strong>」と入力してください。
+        </p>
+        <h5 class="mt-3">(動画のアップロードについて)</h5>
+          <p>
+            &emsp;ログインすると「TWEET」、「ITA」がナビ、ボタンが現れます。<br />
+            どちらか選んでクリックしてください。クリックすると、読み上げ文の一覧が表示されます。<br />
+            読み上げ文の横にある数字は、今までに上がっている動画の総数です。<br />
+            読み上げの際は、読み仮名の方を読みあげてください。<br />
+            表示されている文章を読み上げた動画をスマホで撮影し、対応する文章をクリックし、アップロードフォームからアップロードしてください。<br />
+            また、撮影の際、逆光など避けて、顔がはっきりと映るようにお願いします。<br />
+            (*この時、動画のアップロードに少し時間がかかります。<br />
+            完了のメッセージがくるまで、<span style="color: red;">アプリを閉じずにお待ちください。</span>)
+          </p>
+        <h5 class="mt-3">(字幕付き録画機能について)</h5>
+        <p>
+          &emsp;上記の通りにアップロードフォームまで行くと「撮影する」というボタンがあるのでそちらを押していただくと、カメラ画面に遷移します。<br />
+          <span style="{color: red;}">赤いボタン</span>を押すと音が鳴り、
+          録画が開始されます。もう1度押すと録画が止まり、録画内容の確認、保存、及びアップロードフォームが出ますので、そちらから操作を行ってください。<br />
+          (<span style="color: red;">撮影の際は、マスクを外し顔、口が映るようにお願いします。<br />
+          また、仕様上スマホ側の音声が少し遅れて聞こえるため、音声をお切りになることをおすすめ致します。</span>)
+          「<strong>撮影した動画の保存、アップロード方法</strong>」<br />
+          ・<strong>iPhoneの場合</strong><br />
+          &emsp;<strong>ファイル</strong>の中の<strong>ダウンロード</strong>という場所に保存されます。<br />
+          アップロードの際は、ファイル選択をする際に<strong>ブラウズ</strong>を押すと保存したファイルのある場所に飛べます。<br />
+          わからない場合は<a href="https://appllio.com/ios-where-is-download-files">こちら</a>をご覧ください。><br />
+          ・<strong>Androidスマホの場合</strong>
+          &emsp;<strong>内部ストレージ</strong>または<strong>SDカード</strong>どちらかに保存し、ファイル選択で保存場所にあるファイルをアップロードしてください。<br />
+          Androidの場合、動画のファイルが<strong>.webm</strong>という見慣れない拡張子になりますが、そのままアップロードしてください。
+          わからない場合は<a href="https://sp7pc.com/google/android/29494">こちら</a>をご覧ください。<br />
+          「<strong>録画機能が使用できない場合</strong>」
+          &emsp;この場合は、ページをリロードするかスマホの設定からカメラとマイクの使用許可について確認してください。<strong>両方を許可</strong>にすると使用が可能です。<br />
+          また、以下のブラウザでは動作確認済みですのでそちらのブラウザからのご利用をお願いします。
+          <strong>(動作確認済みブラウザ)</strong>
+          <ul>
+            <li>Safari (iOS, macOS)</li>
+            <li>Chrome (Android, iOS, macOS)</li>
+            <li>FireFox (Android)</li>
+          </ul>
+        </p>
+        <h5 class="mt-3">(パスワードを忘れた場合について)</h5>
+          <p>
+            &emsp;パスワードを忘れた場合は、「<strong>s18f1005@bene.fit.ac.jp</strong>」まで、<strong>学籍番号</strong>と<strong>用件</strong>を記述してご連絡ください。<br />
+            こちらで再設定を行い、対処させて頂きます。
+          </p>
+          <p>
+            (上記の記載以外で、わからないことがあれば、「s18f1005@bene.fit.ac.jp」まで問い合わせの程、よろしくお願いします。)
+          </p>
+    </div>
+</div>
+{% endblock%}

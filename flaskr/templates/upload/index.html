@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block title %}INDEX{% endblock %}
+
+{% block content %}
+{% if g.user %}
+<div class="row">
+  <div class="col pl-3 pr-3">
+    <p>・ようこそ、{{ g.user['fit_id'] }}さん</p>
+    <p class="text-center">
+    「<a href="{{ url_for('upload.introduction') }}">アプリの使用方法はINTRODUCTIONから</a>」
+    </p>
+    <p>
+    &emsp;「TWEET」もしくは「ITA」の項目を選択いただきますと、動画の読み上げ文が表示されます。<br />
+    その文を読み上げた顔の映った動画を、各項目へアップロード、よろしくお願いします。<br />
+    ( <strong>* なるべく逆光などを避けて、顔を映して頂きますようよろしくお願いします。<br />
+      また、読み上げの際は、読み仮名の方を読み上げてくださいますよう、よろしくお願いします。
+    </strong>)
+    </p>
+    <div class="text-left pl-3 pt-3">
+    <a class="btn btn-outline-primary mr-3" href="{{ url_for('upload.tweet_list') }}">TWEET</a>
+    <a class="btn btn-outline-primary pr-4 pl-4" href="{{ url_for('upload.ita_list') }}"><span class="text-center">ITA</span></a>
+    </div>
+  </div>
+</div>
+<div class="row pl-3 pr-3 mt-4">
+  <div class="col">
+    <h5><お知らせ></h5>
+    <ul>
+      <li>2021/10/01: サインアップの必要がなくなりました。</li>
+      <li>2021/09/25: UIを一部変更及び、字幕付き録画機能を追加しました。</li>
+    </ul>
+  </div>
+</div>
+{% else %}
+<div class="pl-3 pr-3">
+  <h1 class="mb-3">学籍番号入力</h1>
+  <p>
+    「<strong>学籍番号</strong>」を入力してください。<br />
+    学外の方は「<strong>guest</strong>」と入力してください。
+  </p>
+  <form action="{{ url_for('auth.login_or_register') }}" method="post">
+    <div class="form-group">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+      <label for="fit_id"><strong>学籍番号</strong></label>
+      <input type="text" class="form-control" name="fit_id" id="fit_id" aria-describedby="fitIdHelp" placeholder="学籍番号" required>
+    </div>
+    <button type="submit" class="btn btn-primary mt-2 pl-3 mb-3">ログイン</button>
+  </form>
+</div>
+{% endif %}
+{% endblock%}
+{% block script %}
+<script>
+  history.pushState(null, null, null);
+  window.addEventListener("popstate", function(e){
+    history.pushState(null, null, null);
+    return;
+  });
+</script>
+{% endblock %}

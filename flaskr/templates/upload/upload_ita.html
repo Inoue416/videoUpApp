@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% block title %}UPLOAD ITA{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="/static/css/upload.css">
+{% endblock %}
+{% block content %}
+<div class="row pl-2 mb-3">
+  <div class="col">
+    <h1>動画アップロード</h1>
+  </div>
+</div>
+<div class="row pr-3 pl-3 mb-4">
+  <div class="col">
+    <h5>読み上げ文章 :</h5>
+    <h5 class="mb-3 pl-2"><strong>{{ data['file_title'] }}</strong></h5>
+
+    <h5>読みがな:</h5>
+    <h5 class="pl-2"><strong>{{ data['kana'] }}</strong></h5>
+  </div>
+</div>
+<div class="row pr-3 pl-3 mb-4">
+  <div class="col">
+    <h4><strong><字幕付き動画撮影機能></strong></h4>
+    <a class="btn btn-primary ml-3 pl-4 pr-4" href="{{ url_for('upload.record', file_id=file_id) }}"><span class="text-center">撮影する</span></a>
+  </div>
+</div>
+<div class="row pr-3 pl-3">
+  <div class="col">
+    <form id="uploadForm" method="post" action="{{ url_for('upload.save_ita', file_id=file_id) }}" enctype="multipart/form-data">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+      <div class="form-group">
+        <div class="mb-3">
+          <h4><strong><動画アップロードフォーム></strong></h4>
+            <label for="ageSelect"><strong>年齢</strong></label>
+            <select class="form-control" id="ageSelect" name="ageSelect" required>
+              <option value="10-19">10~19歳</option>
+              <option value="20-29">20~29歳</option>
+              <option value="30-39">30~39歳</option>
+              <option value="40-49">40~49歳</option>
+              <option value="50-59">50~59歳</option>
+              <option value="60-69">60~69歳</option>
+            </select>
+          <label for="video" class="mt-2"><strong>動画ファイル</strong></label>
+          <input type="file" class="form-control-file pl-2" name="video" id="video" aria-describedby="videoHelp" accept="video/*" required>
+          <small id="videoHelp" class="form-text text-muted pl-2">アップロードはよく内容を確認してからお願いします。</small>
+        </div>
+      </div>
+      <button type="button" class="btn btn-primary ml-3" data-toggle="modal" data-target="#exampleModal">アップロード</button>
+    <!-- Modal -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">本当によろしいですか?</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              アップロード内容は正しいですか?<br />
+              (アップロード完了まで少し時間がかかることがありますので、アプリを閉じずにお待ちください。)
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">キャンセル</button>
+              <button type="submit" class="btn btn-primary">確認</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div id="uploadingArea">
+  <div class="uploading-container">
+    <div class="uploading"></div>
+    <div id="uploading-text">uploading</div>
+  </div>
+  <div id="attentionText">アップロード中です。しばらくお待ちください。</div>
+</div>
+{% endblock %}
+{% block script %}
+<script type="text/javascript" src="/static/scripts/upload.js"></script>
+{% endblock %}

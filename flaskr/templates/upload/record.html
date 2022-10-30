@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+{% block title %}RECORD{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="/static/css/camera.css">
+<link rel="stylesheet" href="/static/css/upload.css">
+{% endblock %}
+
+{% block content %}
+<!-- 戻るボタン -->
+<div id="backButtonArea">
+  {% if file_id[0] == 't' %}
+    <a href="{{ url_for('upload.upload_tweet', file_id=file_id) }}"><img src="/static/imgs/backButton.png" alt="戻る"></a>
+  {% else %}
+    <a href="{{ url_for('upload.upload_ita', file_id=file_id) }}"><img src="/static/imgs/backButton.png" alt="戻る"></a>
+  {% endif %}
+</div>
+
+<div id="attentionMessage">
+  <div class="attention-inner">マスクを外し、口元が映るようにしてください。</div>
+</div>
+
+<div id="dataMessage">
+  <div class="cont">
+    <div class="cont-inner">{{ data }}</div>
+  </div>
+</div>
+
+<video id="camera" autoplay playsinline muted>Video stream not available.</video>
+
+<div id="confirmArea" class="row pl-3">
+  <div class="col">
+    <h5><strong><録画内容></strong></h5>
+    <p>読み上げ文章:<br />
+      <strong>{{ data }}</strong>
+    </p>
+  </div>
+  <div class="row pl-3">
+    <div class="col">
+      <video id="confirm">Error.</video>
+    </div>
+    <div class="col mt-3 mb-5">
+      <p>&emsp;録画内容が正しければ、<span style="font-color: bule;">保存する</span>で保存し、
+        下のアップロードフォーム(
+        {% if file_id[0] == 't' %}
+          <a href="{{ url_for('upload.upload_tweet', file_id=file_id) }}">もしくはこちら</a>
+        {% else %}
+          <a href="{{ url_for('upload.upload_ita', file_id=file_id) }}">もしくはこちら</a>
+        {% endif %}
+        )へアップロードしてください。</p>
+      <button id="reRecordButton" class="btn btn-outline-secondary mr-3 ml-3">撮り直す</button>
+      <button id="downloadButton" class="btn btn-primary">保存する</button>
+    </div>
+  </div>
+</div>
+
+<div class="camera-button-area" id="cameraButtonArea">
+  <div class="button-circle">
+    <button class="button-animation" id="cameraOnButton"></button>
+    <button class="button-animation cameraOn" id="cameraOffButton"></button>
+  </div>
+</div>
+
+<div id="uploadreRecordButton" class="row pl-3">
+  <div class="col">
+    {% if file_id[0] == 't' %}
+    <form id="uploadForm" method="post" action="{{ url_for('upload.save_tweet', file_id=file_id) }}" enctype="multipart/form-data">
+    {% else %}
+    <form id="uploadForm" method="post" action="{{ url_for('upload.save_ita', file_id=file_id) }}" enctype="multipart/form-data">
+    {% endif %}
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+    <div class="form-group">
+      <h4><strong><動画アップロードフォーム></strong></h4>
+        <label for="ageSelect"><strong>年齢</strong></label>
+        <select class="form-control" id="ageSelect" name="ageSelect" required>
+          <option value="10-19">10~19歳</option>
+          <option value="20-29">20~29歳</option>
+          <option value="30-39">30~39歳</option>
+          <option value="40-49">40~49歳</option>
+          <option value="50-59">50~59歳</option>
+          <option value="60-69">60~69歳</option>
+        </select>
+      <label for="video" class="mt-2"><strong>動画ファイル</strong></label>
+      <input type="file" class="form-control-file pl-2" name="video" id="video" aria-describedby="videoHelp" accept="video/*" required>
+      <small id="videoHelp" class="form-text text-muted pl-2">アップロードはよく内容を確認してからお願いします。</small>
+    </div>
+
+    {% if file_id[0] == 't' %}
+      <a class="btn btn-outline-secondary pr-4 pl-4 ml-3" href="{{ url_for('upload.upload_tweet', file_id=file_id) }}">戻る</a>
+    {% else %}
+      <a class="btn btn-outline-secondary pr-4 pl-4 ml-3" href="{{ url_for('upload.upload_ita', file_id=file_id) }}">戻る</a>
+    {% endif %}
+    <button type="button" class="btn btn-primary ml-3" data-toggle="modal" data-target="#exampleModal">アップロード</button>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">本当によろしいですか?</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            アップロード内容は正しいですか?<br />
+            (アップロード完了まで少し時間がかかることがありますので、アプリを閉じずにお待ちください。)
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">キャンセル</button>
+            <button id="submitButton" type="submit" class="btn btn-primary">確認</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="uploadingArea">
+  <div class="uploading-container">
+    <div class="uploading"></div>
+    <div id="uploading-text">uploading</div>
+  </div>
+  <div id="attentionText">アップロード中です。<br />しばらくお待ちください。</div>
+</div>
+
+<audio id="sound_on" preload="auto" src="/static/sound/video_on.mp3">
+</audio>
+<audio id="sound_off" preload="auto" src="/static/sound/video_off.mp3">
+</audio>
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript" src="/static/scripts/camera.js"></script>
+{% endblock %}

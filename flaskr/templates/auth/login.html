@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}LOG IN{% endblock %}
+{% block content %}
+<div class="pl-3 pr-3">
+  <h1 class="mb-3">ログイン</h1>
+  <form id="uploadForm" method="post">
+    <div class="form-group">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+      <label for="fit_id"><strong>学籍番号</strong></label>
+      <input type="text" class="form-control" name="fit_id" id="fit_id" aria-describedby="fitIdHelp" placeholder="学籍番号" required>
+    </div>
+
+    <div class="form-group">
+      <label for="password"><strong>パスワード</strong></label>
+      <input type="password" class="form-control" name="password" id="password" placeholder="Password" required>
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-2 pl-3 mb-3">ログイン</button>
+  </form>
+
+  「<a href="{{ url_for('auth.forget_pass') }}" style="font-size: 0.8rm;">パスワードをお忘れの方</a>」
+</div>
+
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript" src="/static/scripts/upload.js"></script>
+{% endblock %}
