@@ -42,3 +42,14 @@ IDを入力してもらいデータベースに存在しなければ、登録後
 ---
 <img src="https://user-images.githubusercontent.com/57441203/199732099-5a14103e-4c8b-47be-8224-ea528485f7b4.jpg" width="20%"><img src="https://user-images.githubusercontent.com/57441203/199733099-b88cb4a4-5a9b-4389-8ab9-7991023a83a0.PNG" width="20%">
 
+### (アップロード機能)
+　フォームから年齢と録画した動画データをサーバーへアップロードできる機能である。また、サーバーに送られた動画データはバックエンドで設定されたGoogle Driveへと送信される。
+
+---
+<img src="https://user-images.githubusercontent.com/57441203/199734689-1ea2d9c6-5c77-4390-b4a8-fb5c96ae65b8.PNG" width="20%"><img src="https://user-images.githubusercontent.com/57441203/199734835-a9246a6c-f0e5-4cf8-a632-a516b0889085.PNG" width="20%">
+
+# 4. 注意事項
+　***※使用する際は、環境変数などの設定や処理を調節してから使用してください。***
+
+# 5. アプリの使用動画、画像
+　以下のリンクから、本アプリの使用動画や機能のフローチャート、スクショが見れます。
