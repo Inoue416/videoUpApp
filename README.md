@@ -53,3 +53,4 @@ IDを入力してもらいデータベースに存在しなければ、登録後
 
 # 5. アプリの使用動画、画像
 　以下のリンクから、本アプリの使用動画や機能のフローチャート、スクショが見れます。
+- [本アプリの使用動画など](https://drive.google.com/drive/folders/1COxG31qLgqVwE5VqzxuhuzkPI4-rtfYV?usp=share_link)
