@@ -31,10 +31,14 @@
 ### (Auth機能)
 　前提として学内での使用を行っていたため、それにあった仕様になっている。
 IDを入力してもらいデータベースに存在しなければ、登録後、ログイン状態にする。また、IDをguestと入力することで、学外の人でも使用できるようになっている。
-<br />
-![home](https://user-images.githubusercontent.com/57441203/199726543-bbb34768-f1c1-4550-9018-5b30867dfda3.PNG)
-<img src="https://user-images.githubusercontent.com/57441203/199726543-bbb34768-f1c1-4550-9018-5b30867dfda3.PNG" width=10 height=10>
+
+---
+<img src="https://user-images.githubusercontent.com/57441203/199726543-bbb34768-f1c1-4550-9018-5b30867dfda3.PNG" width="20%"><img src="https://user-images.githubusercontent.com/57441203/199733701-0b58d7e1-63ea-4022-87de-ed9057264489.PNG" width="20%"><img src="https://user-images.githubusercontent.com/57441203/199733835-d774037f-d0ce-4713-b856-72b81b336251.PNG" width="20%">
+
 
 ### (字幕付きの録画機能)
+　前処理をおこなったテキストデータを文章データとして用い、読み上げてほしい文章の字幕を表示し録画することが可能な機能である。また、録画後は録画内容の確認とダウンロードを行うことができる。
 
-　前処理をおこなったテキストデータを文章データとして用い、
+---
+<img src="https://user-images.githubusercontent.com/57441203/199732099-5a14103e-4c8b-47be-8224-ea528485f7b4.jpg" width="20%"><img src="https://user-images.githubusercontent.com/57441203/199733099-b88cb4a4-5a9b-4389-8ab9-7991023a83a0.PNG" width="20%">
+
