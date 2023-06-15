@@ -31,7 +31,8 @@ let attentionMessage = null
 let cameraArea = null
 let uploadingArea = null;
 let uploadForm = null;
-
+let base64_video_url = null
+let base64_reader = null
 
 function successCallback(stream){
   video.srcObject = stream;
@@ -51,6 +52,9 @@ function successCallback(stream){
     confirm.setAttribute('height', height)
     var outputdata = window.URL.createObjectURL(e.data)
     record_data=e.data
+    let blob = new Blob([e.data], { type: mimeType })
+    base64_reader = new FileReader()
+    base64_reader.readAsDataURL(blob)
     confirm.src = outputdata
   }
   console.log('Start recordr.')
@@ -242,8 +246,9 @@ function setup(){
 
   //ダウンロードのイベント定義
   downloadButton.addEventListener('click', function (ev){
-    console.log(record_data)
     var blob = new Blob([record_data], { type: mimeType })
+    let base64_video_url = base64_reader.result
+    
     window.URL = window.URL || window.webkitURL;
     var URL = window.URL || window.webkitURL;
     var createObjectURL = URL.createObjectURL || webkitURL.createObjectURL;
@@ -256,6 +261,9 @@ function setup(){
     a.download = (time)
     a.click();
     window.URL.revokeObjectURL(url);
+    // console.log(base64_reader)
+    console.log('base64 url: ', base64_video_url)
+    base64_reader = null
   })
   startup();
   console.log('Complete setup.')
