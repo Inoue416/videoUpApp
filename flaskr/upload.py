@@ -177,7 +177,7 @@ def save_tweet(file_id):
         flash('すでにこの項目はアップロードされています。', danger)
         return redirect(url_for("upload.index"))
     else:
-        UPLOAD_PATH = 'flaskr/video'
+        UPLOAD_PATH = 'video'
         db = get_db()
         db.execute('SELECT * FROM tweets WHERE file_id = %s', (file_id,))
         # 動画のデータベース情報を獲得
@@ -190,6 +190,7 @@ def save_tweet(file_id):
         gender = u_data['gender']
         age = u_data['age']"""
         stream = None
+        
         exd = re.findall(r'\.\w*', video.filename)
         filename = UPLOAD_PATH + (('/{}_{}{}').format(file_id, v_num, exd[0]))
         videoname = (('{}_{}{}').format(file_id, v_num, exd[0]))
@@ -223,7 +224,7 @@ def save_ita(file_id):
         flash('すでにこの項目はアップロードされています。', danger)
         return redirect(url_for("upload.index"))
     else:
-        UPLOAD_PATH = 'flaskr/video'
+        UPLOAD_PATH = 'video'
         db = get_db()
         db.execute('SELECT * FROM itas WHERE file_id = %s', (file_id,))
         # 動画のデータベース情報を獲得
@@ -236,7 +237,6 @@ def save_ita(file_id):
         u_data = db.fetchone()
         gender = u_data['gender']
         age = u_data['age']"""
-
         exd = re.findall(r'\.\w*', video.filename)
         filename = UPLOAD_PATH + (('/{}_{}{}').format(file_id, v_num, exd[0]))
         videoname = (('{}_{}{}').format(file_id, v_num, exd[0]))
