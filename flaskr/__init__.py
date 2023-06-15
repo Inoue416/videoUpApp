@@ -8,19 +8,18 @@ from flask_wtf.csrf import CSRFProtect
 
 csrf = CSRFProtect()
 #from flask_mail import Mail
-
+from dotenv import load_dotenv
+load_dotenv() # 仕様上、.envファイルは__init__.pyと同階層におく
 
 import sys
-sys.path.append(os.path.join('/.env'))
+sys.path.append(os.path.join('..'))
 
 
 
 def create_app(test_config=None):
     # create and configure the app
     app = Flask(__name__, static_url_path='/static', instance_relative_config=True)
-    print(os.getcwd())
-    print(os.environ.get('SECRET_KEY'))
-    exit()
+   
     app.config.from_mapping(
         SECRET_KEY=os.environ.get('SECRET_KEY'),
         #SECRET_KEY='dev',
