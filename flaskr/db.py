@@ -108,7 +108,8 @@ def delete_columns_command():
 @with_appcontext
 def setting_data_command():
     print('*** START ***')
-    file = open(file='text_data/tweet.txt', mode='r', encoding='utf_8')
+
+    file = open(file='../text_data/tweet.txt', mode='r', encoding='utf_8')
     dic = {}
     i=0
     for f in file:
@@ -116,7 +117,7 @@ def setting_data_command():
         i+=1
 
     file.close()
-    file = open(file='text_data/tweet_kana.txt', mode='r', encoding='utf_8')
+    file = open(file='../text_data/tweet_kana.txt', mode='r', encoding='utf_8')
     i = 0
     for f in file:
         dic['t_v{}'.format(i)].append(f.replace('\n', ''))
@@ -132,7 +133,7 @@ def setting_data_command():
     print('Tweet commit.')
     g.conn.commit()
     close_db()
-    file = open(file='text_data/ita.txt', mode='r', encoding='utf_8')
+    file = open(file='../text_data/ita.txt', mode='r', encoding='utf_8')
     dic = {}
     i=0
     for f in file:
@@ -140,7 +141,7 @@ def setting_data_command():
         i+=1
 
     file.close()
-    file = open(file='text_data/ita_kana.txt', mode='r', encoding='utf_8')
+    file = open(file='../text_data/ita_kana.txt', mode='r', encoding='utf_8')
     i = 0
     for f in file:
         dic['i_v{}'.format(i)].append(f.replace('\n', ''))
@@ -156,6 +157,7 @@ def setting_data_command():
     print('ITA commit.')
     g.conn.commit()
     close_db()
+    
 
     cur = get_db()
     cur.execute("INSERT INTO admins (id, password) VALUES (%s, %s)",
