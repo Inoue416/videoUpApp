@@ -12,8 +12,8 @@ def get_db():
             database=os.environ.get('DATABASE'),
             user=os.environ.get('DATABASE_USER'),
             password=os.environ.get('DATABASE_PASSWORD'),
-            host=os.environ.get('DATABASE_HOST'),
-            port=os.environ.get('DATABASE_PORT')
+            # host=os.environ.get('DATABASE_HOST'),
+            # port=os.environ.get('DATABASE_PORT')
         )
         """g.conn = psycopg2.connect(
             database='flaskr',
