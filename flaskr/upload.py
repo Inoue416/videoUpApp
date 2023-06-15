@@ -9,7 +9,7 @@ from flaskr.db import get_db, close_db
 import os
 import re
 from datetime import datetime
-from flaskr.googleAPI.upload_googledrive import upload_drive
+# from flaskr.googleAPI.upload_googledrive import upload_drive
 
 from flask_bootstrap import Bootstrap
 from flask_paginate import Pagination, get_page_parameter
@@ -200,7 +200,7 @@ def save_tweet(file_id):
             os.system("ffmpeg -i {} {}".format(filename, (os.path.join(UPLOAD_PATH, videoname.replace('.webm', '.mp4')))))
             filename = filename.replace('.webm', '.mp4')
             videoname = videoname.replace('.webm', '.mp4')"""
-        upload_drive(foldername=file_id, videopath=filename, videoname=videoname)
+        # upload_drive(foldername=file_id, videopath=filename, videoname=videoname)
         db.execute('INSERT INTO posts (author_id, file_id, age, created) VALUES(%s,%s,%s,CURRENT_TIMESTAMP)', (session.get('user_id'), file_id, age))
         g.conn.commit()
         v_num += 1
@@ -247,7 +247,7 @@ def save_ita(file_id):
             os.system("ffmpeg -i {} {}".format(filename, (os.path.join(UPLOAD_PATH, videoname.replace('.webm', '.mp4')))))
             filename = filename.replace('.webm', '.mp4')
             videoname = videoname.replace('.webm', '.mp4')"""
-        upload_drive(foldername=file_id, videopath=filename, videoname=videoname)
+        # upload_drive(foldername=file_id, videopath=filename, videoname=videoname)
         db.execute('INSERT INTO posts (author_id, file_id, age, created) VALUES(%s,%s,%s,CURRENT_TIMESTAMP)', (session.get('user_id'), file_id, age))
         g.conn.commit()
         v_num += 1
