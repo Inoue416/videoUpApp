@@ -5,6 +5,7 @@ let width = 350
 let height = 480
 let streaming = false
 let video = null
+let video_form_elem = null;
 let constrains = { video: {
     width: 480,
     height: 360,
@@ -23,7 +24,7 @@ let reRecordButton = null
 let cameraButtonArea = null
 let confirmVideo = null
 let backButtonArea = null
-let downloadButton = null
+// let downloadButton = null
 let attrtibuteArray = ['noActive','cameraOn']
 let dataMessage = null
 let mimeType = null
@@ -31,7 +32,6 @@ let attentionMessage = null
 let cameraArea = null
 let uploadingArea = null;
 let uploadForm = null;
-let base64_video_url = null
 let base64_reader = null
 
 function successCallback(stream){
@@ -54,6 +54,9 @@ function successCallback(stream){
     record_data=e.data
     let blob = new Blob([e.data], { type: mimeType })
     base64_reader = new FileReader()
+    base64_reader.onload = function (){
+      video_form_elem.value = base64_reader.result
+    }
     base64_reader.readAsDataURL(blob)
     confirm.src = outputdata
   }
@@ -93,6 +96,7 @@ function addHeaderFooter(){
 
 // 録画開始の関数
 function setRecordOn(){
+  video_form_elem.setAttribute('class', 'noActive')
   s = cameraArea.getAttribute('class')
   s = s.replace(' cameraAreaOff', '')
   s += (' cameraAreaOn')
@@ -169,6 +173,8 @@ function setup(){
   uploadingArea = document.getElementById("uploadingArea")
   uploadingArea.setAttribute('class', 'noActive')
   uploadForm = document.getElementById("uploadForm")
+  video_form_elem = document.querySelector("#video")
+  video_form_elem.setAttribute('class', 'noActive')
   uploadForm.addEventListener('submit', function(){
     var els = this.elements;
     for (var i=0; i < els.length; i++){
@@ -192,7 +198,7 @@ function setup(){
   footerArea.setAttribute('class', s)
   removeHeaderFooter();
   //録画内容ダウンロードボタン
-  downloadButton = document.getElementById("downloadButton")
+  // downloadButton = document.getElementById("downloadButton")
   //カメラ起動・停止の合図の音声
   sound_on = document.getElementById('sound_on')
   sound_off = document.getElementById('sound_off')
@@ -230,11 +236,12 @@ function setup(){
 
   //録画停止のイベント定義
   cameraOffButton.addEventListener('click', function (ev){
+    video_form_elem.removeAttribute('class')
     //録画の停止
     recorder.stop()
     //stream.getTracks().forEach(track => track.stop());
     sound(sound_off)
-    window.setTimeout(function(){console.log('stop camera')}, 500);
+    window.setTimeout(function(){console.log('stop camera')}, 500);  
     setReRecord();
   })
 
@@ -245,26 +252,25 @@ function setup(){
   })
 
   //ダウンロードのイベント定義
-  downloadButton.addEventListener('click', function (ev){
-    var blob = new Blob([record_data], { type: mimeType })
-    let base64_video_url = base64_reader.result
+  // downloadButton.addEventListener('click', function (ev){
+  //   var blob = new Blob([record_data], { type: mimeType })
+  //   let base64_video_url = base64_reader.result
     
-    window.URL = window.URL || window.webkitURL;
-    var URL = window.URL || window.webkitURL;
-    var createObjectURL = URL.createObjectURL || webkitURL.createObjectURL;
-    var url = createObjectURL(blob)
-    var a = document.createElement('a')
-    document.body.appendChild(a)
-    a.style = 'display:none'
-    a.href = url;
-    var time = Date.now();
-    a.download = (time)
-    a.click();
-    window.URL.revokeObjectURL(url);
-    // console.log(base64_reader)
-    console.log('base64 url: ', base64_video_url)
-    base64_reader = null
-  })
+  //   window.URL = window.URL || window.webkitURL;
+  //   var URL = window.URL || window.webkitURL;
+  //   var createObjectURL = URL.createObjectURL || webkitURL.createObjectURL;
+  //   var url = createObjectURL(blob)
+  //   var a = document.createElement('a')
+  //   document.body.appendChild(a)
+  //   a.style = 'display:none'
+  //   a.href = url;
+  //   var time = Date.now();
+  //   a.download = (time)
+  //   a.click();
+  //   window.URL.revokeObjectURL(url);
+  //   // console.log(base64_reader)
+  //   console.log('base64 url: ', base64_video_url)
+  // })
   startup();
   console.log('Complete setup.')
 }
