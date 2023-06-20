@@ -39,16 +39,8 @@
       <video id="confirm">Error.</video>
     </div>
     <div class="col mt-3 mb-5">
-      <p>&emsp;録画内容が正しければ、<span style="font-color: bule;">保存する</span>で保存し、
-        下のアップロードフォーム(
-        {% if file_id[0] == 't' %}
-          <a href="{{ url_for('upload.upload_tweet', file_id=file_id) }}">もしくはこちら</a>
-        {% else %}
-          <a href="{{ url_for('upload.upload_ita', file_id=file_id) }}">もしくはこちら</a>
-        {% endif %}
-        )へアップロードしてください。</p>
+      <small class="form-text text-muted pl-2 pb-2">アップロードはよく内容を確認してからお願いします。</small>
       <button id="reRecordButton" class="btn btn-outline-secondary mr-3 ml-3">撮り直す</button>
-      <button id="downloadButton" class="btn btn-primary">保存する</button>
     </div>
   </div>
 </div>
@@ -80,8 +72,7 @@
           <option value="60-69">60~69歳</option>
         </select>
       <!-- <label for="video" class="mt-2"><strong>動画ファイル</strong></label> -->
-      <input type="hidden" class="form-control-file pl-2" name="video" id="video" aria-describedby="videoHelp" accept="video/*" required>
-      <small id="videoHelp" class="form-text text-muted pl-2">アップロードはよく内容を確認してからお願いします。</small>
+      <input type="hidden" name="video" id="video" required>
     </div>
 
     {% if file_id[0] == 't' %}
