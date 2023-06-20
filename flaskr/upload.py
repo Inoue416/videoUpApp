@@ -16,9 +16,16 @@ from flask_paginate import Pagination, get_page_parameter
 
 import time
 
+import base64
+
 bp = Blueprint('upload', __name__)
 danger = "alert alert-danger"
 success = "alert alert-success"
+BASE64_VIDEO_URL_START = 'data:video/mp4;base64,'
+
+def make_folders_tree(path):
+    if not os.path.exists(path):
+        os.makedirs(path)
 
 # バリデーションのための関数(ブラウザバックの対策)
 def dataChecker(file_id):
@@ -170,31 +177,36 @@ def upload_ita(file_id):
 
 @bp.route('/save_tweet/<file_id>', methods=['POST'])
 def save_tweet(file_id):
-    if 'video' not in request.files:
+    if 'video' not in request.form:
         flash('ファイルが選択されていません。', danger)
         resp = make_response(redirect(url_for('upload.upload_tweet', file_id=file_id)))
     elif dataChecker(file_id) and session.get("user_id") != 0:
         flash('すでにこの項目はアップロードされています。', danger)
         return redirect(url_for("upload.index"))
     else:
-        UPLOAD_PATH = 'video'
+        UPLOAD_PATH = './video/tweet'
+        make_folders_tree(UPLOAD_PATH)
         db = get_db()
         db.execute('SELECT * FROM tweets WHERE file_id = %s', (file_id,))
         # 動画のデータベース情報を獲得
         data = db.fetchone()
         v_num = data['num']
-        video = request.files['video']
+        save_filename = file_id+'_'+str(v_num)+'.mp4'
+        video = request.form['video']
         age = request.form['ageSelect']
+        video_encode = video[len(BASE64_VIDEO_URL_START):]
+        video_decode = base64.b64decode(video_encode)
+        with open(os.path.join(UPLOAD_PATH, save_filename), 'wb') as f:
+            f.write(video_decode)
         """db.execute('SELECT gender, age FROM users WHERE id = %s', (session.get('user_id'),))
         u_data = db.fetchone()
         gender = u_data['gender']
         age = u_data['age']"""
         stream = None
-        
-        exd = re.findall(r'\.\w*', video.filename)
-        filename = UPLOAD_PATH + (('/{}_{}{}').format(file_id, v_num, exd[0]))
-        videoname = (('{}_{}{}').format(file_id, v_num, exd[0]))
-        video.save(os.path.join(UPLOAD_PATH, videoname))
+        # exd = re.findall(r'\.\w*', video.filename)
+        # filename = UPLOAD_PATH + (('/{}_{}{}').format(file_id, v_num, exd[0]))
+        # videoname = (('{}_{}{}').format(file_id, v_num, exd[0]))
+        # video.save(os.path.join(UPLOAD_PATH, videoname))
         # .webm to .mp4
         """if '.webm' in exd:
             exd = ['.mp4']
@@ -211,36 +223,41 @@ def save_tweet(file_id):
         flash('アップロードしました。ありがとうございます。', success)
         #time.sleep(5)
         # TODO: saveしたファイルと変換ファイルがあればそれも消す
-        os.remove(filename)
+        # os.remove(filename)
         resp = make_response(redirect(url_for('upload.index')))
     return resp
 
 @bp.route('/save_ita/<file_id>', methods=['POST'])
 def save_ita(file_id):
-    if 'video' not in request.files:
+    if 'video' not in request.form:
         flash('ファイルが選択されていません。', danger)
         resp = make_response(redirect(url_for('upload.upload_ita', file_id=file_id)))
     elif dataChecker(file_id) and session.get("user_id") != 0:
         flash('すでにこの項目はアップロードされています。', danger)
         return redirect(url_for("upload.index"))
     else:
-        UPLOAD_PATH = 'video'
+        UPLOAD_PATH = './video/ita'
+        make_folders_tree(UPLOAD_PATH)
         db = get_db()
         db.execute('SELECT * FROM itas WHERE file_id = %s', (file_id,))
         # 動画のデータベース情報を獲得
         data = db.fetchone()
         v_num = data['num']
-        video = request.files['video']
+        save_filename = file_id+'_'+str(v_num)+'.mp4'
+        video = request.form['video']
         age = request.form['ageSelect']
-
+        video_encode = video[len(BASE64_VIDEO_URL_START):]
+        video_decode = base64.b64decode(video_encode)
+        with open(os.path.join(UPLOAD_PATH, save_filename), 'wb') as f:
+            f.write(video_decode)
         """db.execute('SELECT gender, age FROM users WHERE id = %s', (session.get('user_id'),))
         u_data = db.fetchone()
         gender = u_data['gender']
         age = u_data['age']"""
-        exd = re.findall(r'\.\w*', video.filename)
-        filename = UPLOAD_PATH + (('/{}_{}{}').format(file_id, v_num, exd[0]))
-        videoname = (('{}_{}{}').format(file_id, v_num, exd[0]))
-        video.save(os.path.join(UPLOAD_PATH, videoname))
+        # exd = re.findall(r'\.\w*', video.filename)
+        # filename = UPLOAD_PATH + (('/{}_{}{}').format(file_id, v_num, exd[0]))
+        # videoname = (('{}_{}{}').format(file_id, v_num, exd[0]))
+        # video.save(os.path.join(UPLOAD_PATH, videoname))
         # .webm to .mp4
         """if '.webm' in exd:
             exd = ['.mp4']
@@ -256,7 +273,7 @@ def save_ita(file_id):
         flash('アップロードしました。ありがとうございます。', success)
         close_db()
         # TODO: saveしたファイルと変換ファイルがあればそれも消す
-        os.remove(filename)
+        # os.remove(filename)
         resp = make_response(redirect(url_for('upload.index')))
     return resp
 
